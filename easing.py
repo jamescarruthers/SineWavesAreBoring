@@ -1,5 +1,4 @@
 import math
-import numpy as np
 
 ############
 # x should be a temporal dimension such as time or position
