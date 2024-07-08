@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from numpy import arange
 
-from easing import *
+from waves import *
 
 # compare different wave functions
 # wave returns -1 to 1, the input 

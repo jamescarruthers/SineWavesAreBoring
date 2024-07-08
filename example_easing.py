@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from numpy import arange
 
-from easing import *
+from waves import *
 
 # compare different easing functions
 # using the standard style of ease
@@ -14,7 +14,7 @@ res = 0.01
 for func in compare:
     xy = []
     for x in arange(-50, 150 + res, res):
-        xy.append((x, ease(x, 0, 100, 100, func)))
+        xy.append((x, ease(x, 0, 50, 100, func)))
     x, y = zip(*xy)
     plt.plot(x, y, label=func.__name__)
 
