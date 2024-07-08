@@ -1,40 +1,56 @@
 import math
 import numpy as np
 
+############
+# x should be a temporal dimension such as time or position
+############
+
 def wave(x, easingFunction):
+    # ensure that 0 to 1 = a full wave
+    x *= 2
+    # ensure that the wave starts on zero
+    x -= 0.5
+    # modulus to repeat wave
     x = x % 2.0
     if x > 1:
         x = 2 - x
     return 2 * easingFunction(x) - 1
 
-def ease(currentTime, startTime, endTime, startValue, endValue, easingFunction):
-    
-    if currentTime <= startTime:
-        return startValue
-    elif currentTime >= endTime:
-        return endValue
-    
-    progress = (currentTime - startTime) / (endTime - startTime)
+############
+# Included easing functions for completeness
+############
 
-    eased_progress = easingFunction(progress)
-    
-    return np.interp(eased_progress, [0, 1], [startValue, endValue]) 
+def ease(currentTime, beginValue, changeValue, duration, easingFunction):
 
-# t: current time, b: beginning value, c: change In value, d: duration
-def ease_trad(t, b, c, d, easingFunction):
-
-    if t <= 0:
-        return b
-    elif t >= d:
-        return b + c
+    if currentTime <= 0:
+        return beginValue
+    elif currentTime >= duration:
+        return beginValue + changeValue
     
-    progress = t / d
+    progress = currentTime / duration
     
     eased_progress = easingFunction(progress)
     
-    currentValue = b + eased_progress * c
+    currentValue = beginValue + eased_progress * changeValue
     
     return currentValue
+
+
+def ease_map(currentVal, startVal, endVal, startValue, endValue, easingFunction):
+    
+    if currentVal <= startVal:
+        return startValue
+    elif currentVal >= endVal:
+        return endValue
+    
+    c = endValue - startValue
+    d = endVal - startVal
+    
+    return ease(currentVal, startValue, c, d, easingFunction)
+
+############
+# These functions output a value from 0 to 1
+############
 
 def ease_in_sine(x):
     return 1 - math.cos((x * math.pi) / 2)
